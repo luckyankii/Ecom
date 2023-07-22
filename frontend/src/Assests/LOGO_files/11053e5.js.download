@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[263],{2308:function(n,t,o){"use strict";o.r(t);var e={components:{IdeasControl:o(1799).a}},l=o(11),component=Object(l.a)(e,(function(){return(0,this._self._c)("IdeasControl",{staticClass:"space-y-4"})}),[],!1,null,null,null);t.default=component.exports}}]);
+//# sourceMappingURL=11053e5.js.map

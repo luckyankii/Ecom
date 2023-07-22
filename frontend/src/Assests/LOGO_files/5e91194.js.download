@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[346],{1312:function(e){e.exports=JSON.parse('{"title":"Resize Icon","tippy":"","buttons":[{"label":"XS","value":"0.5"},{"label":"S","value":"0.75"},{"label":"M","value":"1"},{"label":"L","value":"1.5"},{"label":"XL","value":"2"}]}')}}]);
+//# sourceMappingURL=5e91194.js.map

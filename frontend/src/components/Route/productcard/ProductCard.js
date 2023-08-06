@@ -7,7 +7,6 @@ import {
   AiOutlineEye,
   AiOutlineHeart,
   AiOutlineShoppingCart,
-  AiOutlineStar,
 } from "react-icons/ai";
 import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard";
 function ProductCard({ data }) {
@@ -19,7 +18,7 @@ function ProductCard({ data }) {
   return (
     <div className="w-full h-[350px] bg-white rounded-lg shadow-md  p-3 relative cursor-pointer ">
       <div className="flex justify-end"></div>
-      <Link to={`/product/${product_name}`}>
+      <Link to={`/products/${product_name}`}>
         <img
           src={data.image_Url[0].url}
           alt=""

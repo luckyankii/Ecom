@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "../../style/style.js";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
@@ -12,7 +12,6 @@ function Signup() {
   const [visibility, setVisibility] = useState(false);
   const [fullName, setFullName] = useState("");
   const [avatar, setAvatar] = useState(null);
-  const navigate = useNavigate();
   const toaststyle = {
     position: "top-center",
     autoClose: 3000,
@@ -139,7 +138,7 @@ function Signup() {
                 )}
               </div>
             </div>
-            {/* -----------------Upload File ---------------------------- */}
+            {/* ----------------- Upload File ---------------------------- */}
             <div>
               <label
                 htmlFor="avatar"
@@ -184,7 +183,7 @@ function Signup() {
               </button>
             </div>
             <div className={`${styles.noramlFlex} w-full`}>
-              <h4>Not Have Any Account </h4>
+              <h4>Already Have An Account </h4>
               <Link to="/login" className="text-blue-600  pl-2">
                 Login
               </Link>

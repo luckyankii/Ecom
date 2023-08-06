@@ -13,11 +13,19 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import DropDown from "./DropDown.js";
 import Navbar from "./Navbar";
 import { CgProfile } from "react-icons/cg";
+import Cart from "../cart/Cart.js";
+import Wishlist from "../wishlist/Wishlist.js";
+import { useSelector } from "react-redux";
+import { backend_url } from "../../server";
 function Header({ activeHeading }) {
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+  console.log(isAuthenticated);
   const [searchterm, SetSearchTerm] = useState("");
   const [SearchData, SetSearchData] = useState(null);
   const [active, setActive] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
+  const [openWishlist, setOpenWishlist] = useState(false);
   const handleSearchChange = (e) => {
     // We have created a search filter
     const term = e.target.value;
@@ -136,7 +144,7 @@ function Header({ activeHeading }) {
             <div className={`${styles.noramlFlex}`}>
               <div
                 className="relative cursor-pointer mr-[15px]"
-                // onClick={() => setOpenWishlist(true)}
+                onClick={() => setOpenWishlist(true)}
               >
                 <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
                 <span className="absolute right-0 top-0 rounded-full bg-rose-700 w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
@@ -148,7 +156,7 @@ function Header({ activeHeading }) {
             <div className={`${styles.noramlFlex}`}>
               <div
                 className="relative cursor-pointer mr-[15px]"
-                // onClick={() => setOpenCart(true)}
+                onClick={() => setOpenCart(true)}
               >
                 <AiOutlineShoppingCart
                   size={30}
@@ -165,12 +173,29 @@ function Header({ activeHeading }) {
                 className="relative cursor-pointer mr-[15px]"
                 // onClick={() => setOpenCart(true)}
               >
-                <Link to="/login">
-                  <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
-                </Link>
+                {isAuthenticated ? (
+                  <Link to="/profile">
+                    <img
+                      src={`${backend_url}${user?.avatar}`}
+                      alt=""
+                      className="w-[40px] h-[40px] rounded-full"
+                    />
+                  </Link>
+                ) : (
+                  <Link to="/login">
+                    <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
+                  </Link>
+                )}
               </div>
             </div>
-            {/* --- continue----- */}
+
+            {/* ----- Cart popup */}
+
+            {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
+            {/* ----- Wishlist  popup */}
+            {openWishlist ? (
+              <Wishlist setOpenWishlist={setOpenWishlist} />
+            ) : null}
           </div>
         </div>
       </div>

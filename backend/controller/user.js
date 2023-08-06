@@ -18,49 +18,63 @@ const { isAuthenticated } = require("../middlewares/Auth");
    4. Send jwt token for activation using Node mailer 
 */
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
-  const { name, email, password } = req.body;
-  console.log(email);
-  const userEmail = await User.findOne({ email: email });
-  if (userEmail) {
-    // Before Returning we will delete the image we have uploaded here
-    // As user exists means we have image so do not need to post image for already sign-in user-[21]
-    const filename = req.file.filename;
-    const filepath = `uploads/${filename}`;
-    fs.unlink(filepath, (err) => {
-      if (err) {
-        console.error(err);
-        res.status(404).json({ error: "Deleting file failed" });
-      }
-    });
-    return next(
-      new Errorhandler("User already Exist from create-userRoute", 400)
-    );
-  }
-  const filename = req.file.filename;
-  const fileurl = path.join(filename);
-  const newuser = {
-    name: name,
-    email: email,
-    password: password,
-    avatar: fileurl,
-  };
-
-  const activationToken = createActivationToken(newuser);
-  const activationUrl = `http://localhost:3000/activation/${activationToken}`;
   try {
-    await sendMail({
-      email: newuser.email,
-      subject: "Activate Your Account ",
-      message: `Hello  ${newuser.name} ,please click on the link to activate your account :${activationUrl}`,
-    });
+    const { name, email, password } = req.body;
+    console.log(email, password);
+    const userEmail = await User.findOne({ email: email });
+    if (userEmail) {
+      // Before Returning we will delete the image we have uploaded here
+      // As user exists means we have an image so do not need to post an image for an already signed-in user-[21]
+      if (req.file) {
+        const filename = req.file.filename;
+        const filepath = `uploads/${filename}`;
+        fs.unlink(filepath, (err) => {
+          if (err) {
+            console.error(err);
+            res.status(404).json({ error: "Deleting file failed" });
+          }
+        });
+      }
+      return next(
+        new Errorhandler("User already Exists from create-user Route", 400)
+      );
+    }
 
-    res.status(201).json({
-      success: true,
-      message: `Please Check your email : ${newuser.email} to activate your account`,
-    });
-  } catch (e) {
-    // const errorMessage = err.message + "This is from create-user Route";
-    return next(new Errorhandler(err.message, 500));
+    if (!req.file) {
+      // Handle the case where no file is uploaded
+      return next(new Errorhandler("Please upload a file", 400));
+    }
+
+    const filename = req.file.filename;
+    const fileurl = path.join(filename);
+    const newuser = {
+      name: name,
+      email: email,
+      password: password,
+      avatar: fileurl,
+    };
+    console.log(newuser);
+    const activationToken = createActivationToken(newuser);
+    console.log(activationToken);
+    const activationUrl = `http://localhost:3000/activation/${activationToken}`;
+    try {
+      await sendMail({
+        email: newuser.email,
+        subject: "Activate Your Account",
+        message: `Hello ${newuser.name}, please click on the link to activate your account: ${activationUrl}`,
+      });
+      console.log("success");
+
+      res.status(201).json({
+        success: true,
+        message: `Please check your email: ${newuser.email} to activate your account`,
+      });
+    } catch (e) {
+      // const errorMessage = err.message + "This is from create-user Route";
+      return next(new Errorhandler(e.message, 500));
+    }
+  } catch (error) {
+    return next(new Errorhandler(error.message, 400));
   }
 });
 

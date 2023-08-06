@@ -10,6 +10,8 @@ import {
   BestSelling,
   Eventpage,
   FAQPage,
+  ProductDetailsPage,
+  ProfilePage,
 } from "./Route";
 import "./App.css";
 import Store from "./Redux/Store.js";
@@ -25,11 +27,14 @@ function App() {
         <Routes>
           <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/sign-up" element={<SignupPage />} />
           <Route
             path="/activation/:activation_token"
             element={<ActivationPage />}
           />
+
+          <Route path="/products/:name" element={<ProductDetailsPage />} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/best-selling" element={<BestSelling />} />
           <Route path="/events" element={<Eventpage />} />

@@ -10,10 +10,10 @@ function CountDown() {
   });
 
   function calculateTimeLeft() {
-    const diff = new Date("2023-07-06") - +new Date();
+    const diff = new Date("2023-08-29") - +new Date();
     // The +new Date() expression is used to convert the current date and time into a numeric timestamp.
     let timeleft = {};
-    if (diff>0)
+    if (diff > 0)
       timeleft = {
         days: Math.floor(diff / (1000 * 60 * 60 * 24)),
         hour: Math.floor((diff / (1000 * 60 * 60)) % 24),

@@ -1,2 +1,2 @@
 # Shop-mani
-### Deployed Application [See Here](https://eazy-buy-ecommerce.vercel.app/)
+### Deployed Application [See Here](https://shop-mani.netlify.app/)
